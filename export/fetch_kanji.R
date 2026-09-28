@@ -267,7 +267,7 @@ parse_recall <- function(json) {
   )
 }
 
-# Progress is how far through the ten steps a code got, the nearest thing to
+# Progress is how far through the eleven steps a code got, the nearest thing to
 # Qualtrics' page-based percentage. Finished means part 2 was submitted.
 progress <- imap(finished, ~ tibble(extra_param_code = unique(.x$extra_param_code),
                                     step = match(.y, tables))) %>%

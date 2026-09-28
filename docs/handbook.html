@@ -400,7 +400,6 @@
 
   <main>
 
-    <!-- ============ 2 ============ -->
     <!-- ============ 1 ============ -->
     <section id="map">
       <span class="sec-num">Section 1</span>
@@ -452,7 +451,7 @@
     <section id="surveys">
       <span class="sec-num">Section 2</span>
       <h2>Editing a questionnaire</h2>
-      <p class="lede">Consent, demographics and the three pause vignettes are all edited the same way, in the SelfHelp CMS.</p>
+      <p class="lede">Consent, demographics and the four pause vignettes are all edited the same way, in the SelfHelp CMS.</p>
 
       <ol class="steps">
         <li><strong>Open Module SurveyJS</strong> from the admin menu and pick the questionnaire by its CMS name (see the table above).</li>
@@ -502,7 +501,7 @@
           <tbody>
             <tr><td class="var">recall</td><td class="var">kanji_recall.xlsx</td><td>Every recall trial, one row each, laid out like the example datafile: practice, then list A, then list B.</td></tr>
             <tr><td class="var">recall</td><td class="var">kanji_practice.xlsx<br>kanji_recall_A.xlsx<br>kanji_recall_B.xlsx</td><td>The same trials and layout, one recall block per file.</td></tr>
-            <tr><td class="var">questionnaires</td><td class="var">kanji_part1.xlsx<br>kanji_demographics.xlsx<br>kanji_pause1.xlsx … kanji_pause4.xlsx<br>kanji_part2.xlsx</td><td>One file per questionnaire, one row per page opened, submitted or not.</td></tr>
+            <tr><td class="var">questionnaires</td><td class="var">kanji_part1.xlsx<br>kanji_demographics.xlsx<br>kanji_pause1.xlsx … kanji_pause4.xlsx<br>kanji_part2.xlsx</td><td>One file per questionnaire, every saved row, submitted or not.</td></tr>
             <tr><td class="val">—</td><td class="var">kanji_timing.xlsx</td><td>One row per participant: <code>ID_1</code>, <code>Start_Time</code>, <code>End_Time</code> and <code>Total_Duration_min</code>. Swiss local time. The span runs from opening part 1 to submitting part 2, so it covers the memory task as well.</td></tr>
             <tr><td class="val">—</td><td class="var">kanji_prize_draw.xlsx</td><td>E-mail address and date only, in its own file and never joined to the rest, so a draw entry cannot be tied to anyone’s answers.</td></tr>
           </tbody>
@@ -516,13 +515,14 @@
           <thead><tr><th style="width:280px">Column</th><th>Meaning</th></tr></thead>
           <tbody>
             <tr><td class="var">ID_1 · ID_2</td><td>The participant code, and the code typed again at the end of the study.</td></tr>
-            <tr><td class="var">Progress · Finished</td><td>How far through the ten steps the code got, in percent. <strong>Finished</strong> means the last step was submitted.</td></tr>
+            <tr><td class="var">Progress · Finished</td><td>How far through the eleven steps the code got, in percent. <strong>Finished</strong> means the last step was submitted.</td></tr>
             <tr><td class="var">Reaktionszeit_ms_Antwort</td><td>Trial appearing to answer confirmed, ms.</td></tr>
             <tr><td class="var">Reaktionszeit_ms_Confidence_Judgement</td><td>Answer confirmed to confidence confirmed, ms.</td></tr>
             <tr><td class="var">Zeit_sek_… · Click_Count</td><td>First click, last click and page submit in seconds from the trial appearing, and the number of clicks — as the Qualtrics timing question records them.</td></tr>
             <tr><td class="var">CounterBalance</td><td><code>AB</code> learned and recalled list A first, <code>BA</code> list B first. Empty for runs from before counterbalancing, which were all <code>AB</code>. <strong>List</strong> still says which list the trial belongs to.</td></tr>
             <tr><td class="var">Target · Choose_Answer</td><td>The tested item, and the picture the participant chose. Names as in the item list: the image <code>Dunkelheit</code> is <code>Dunkel</code>, and list A’s second <code>Gefaehrlich</code>, the one shown as a target, is <code>Gefaehrlich_2</code>.</td></tr>
             <tr><td class="var">Distractor</td><td>The wrong picture shown next to the target, e.g. <code>Wald</code> for <code>Nebel</code>. Same naming as the item list.</td></tr>
+            <tr><td class="var">Seite_Antwort · Seite_Target</td><td>The side the participant chose, and the side the target was on: <code>links</code> or <code>rechts</code>.</td></tr>
           </tbody>
         </table>
       </div>
@@ -546,7 +546,6 @@
       </div>
     </section>
 
-    <!-- ============ 5 ============ -->
     <!-- ============ 5 ============ -->
     <section id="columns">
       <span class="sec-num">Section 5</span>
@@ -572,13 +571,13 @@
         </table>
       </div>
 
-      <h3>Timing</h3>
+      <h3>Page metadata</h3>
       <div class="tablewrap">
         <table class="tight">
           <thead><tr><th style="width:240px">Column</th><th>Meaning</th></tr></thead>
           <tbody>
             <tr><td class="var">_meta_duration</td><td>Seconds spent on the page.</td></tr>
-            <tr><td class="var">_meta_language</td><td>Language the page was answered in (de-CH, en-GB, fr-CH, it-CH). The export turns Part 1's into a <code>UserLanguage</code> column.</td></tr>
+            <tr><td class="var">_meta_language</td><td>Language the page was answered in: <code>de-CH</code>, <code>en-GB</code>, <code>fr-CH</code> or <code>it-CH</code>.</td></tr>
             <tr><td class="var">_meta_start_time<br>_meta_end_time</td><td>UTC timestamps for opening and submitting.</td></tr>
             <tr><td class="var">_meta_pages</td><td>Per-page timings, packed as one cell (see below).</td></tr>
             <tr><td class="var">pageNo</td><td>Last page reached inside that questionnaire, counting from 0.</td></tr>
@@ -595,6 +594,7 @@
           <tbody>
             <tr><td class="var">EV</td><td>Do you consent to taking part?<br><span style="color:var(--grey)">1 = yes · 2 = no</span></td></tr>
             <tr><td class="var">ID_1</td><td>The code typed from the letter. Free text.</td></tr>
+            <tr><td class="var">UserLanguage</td><td>The language chosen at the start, copied by the export from <code>_meta_language</code>.</td></tr>
           </tbody>
         </table>
       </div>
@@ -698,7 +698,7 @@
     <section id="trials">
       <span class="sec-num">Section 6</span>
       <h2>The memory task columns</h2>
-      <p class="lede">The recall files already give one row per trial. Underneath, on the CMS <strong>Data</strong> page, each of the four task pages stores a few summary numbers plus one packed cell holding every trial.</p>
+      <p class="lede">The recall files already give one row per trial. Underneath, on the CMS <strong>Data</strong> page, each of the four task pages stores a few summary numbers plus one packed cell per block holding its trials.</p>
 
       <h3>Summary columns</h3>
       <div class="tablewrap">
@@ -714,14 +714,14 @@
             <tr><td class="var">extra_data_n_trials_recall_B</td><td>Recall trials, list B.</td></tr>
             <tr><td class="var">extra_data_n_correct_recall_B</td><td><strong>Correct recalls, list B.</strong></td></tr>
             <tr><td class="var">extra_data_UserLanguage</td><td>Language the task ran in (de-CH, en-GB, fr-CH, it-CH).</td></tr>
-            <tr><td class="var">labjs_response_id</td><td>Identifies one sitting of the memory task.</td></tr>
+            <tr><td class="var">labjs_response_id</td><td>Internal id, the same on every task page a code completes in one browser tab.</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="warn">
         <span class="tag">Check the trial count first</span>
-        <p>Each list is <strong>30 learning trials and 15 recall trials</strong>, plus 2 practice learning and 1 practice recall — 93 in all. Recall is half of learning by design: participants learn more pairs than they are tested on. That is 31 rows per participant in <code>kanji_recall.xlsx</code>; 5 rows means the data came from the earlier short test build, not a real run.</p>
+        <p>Each list is <strong>30 learning trials and 15 recall trials</strong>, plus 2 practice learning and 1 practice recall — 93 in all. Recall is half of learning by design: participants learn more pairs than they are tested on. That is 31 rows per participant in <code>kanji_recall.xlsx</code>.</p>
       </div>
 
       <h3>Packed trial cells</h3>

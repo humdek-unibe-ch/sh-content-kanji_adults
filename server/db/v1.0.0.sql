@@ -1787,7 +1787,7 @@ SET @md_surveys = '
 
 ## Editing a questionnaire
 
-Consent, demographics and the three pause vignettes are all edited the same way,
+Consent, demographics and the four pause vignettes are all edited the same way,
 in the SelfHelp CMS.
 
 1. **Open Module SurveyJS** and pick the questionnaire by its CMS name (see the
@@ -1847,7 +1847,7 @@ The files land next to the script, sorted into a `kanji_data` folder:
 |---|---|---|
 | `recall` | `kanji_recall.xlsx` | Every recall trial, one row each, laid out like the example datafile: practice, then list A, then list B |
 | `recall` | `kanji_practice.xlsx` · `kanji_recall_A.xlsx` · `kanji_recall_B.xlsx` | The same trials and layout, one recall block per file |
-| `questionnaires` | `kanji_part1.xlsx` · `kanji_demographics.xlsx` · `kanji_pause1.xlsx` … `kanji_pause4.xlsx` · `kanji_part2.xlsx` | One file per questionnaire, one row per page opened, submitted or not |
+| `questionnaires` | `kanji_part1.xlsx` · `kanji_demographics.xlsx` · `kanji_pause1.xlsx` … `kanji_pause4.xlsx` · `kanji_part2.xlsx` | One file per questionnaire, every saved row, submitted or not |
 | — | `kanji_timing.xlsx` | One row per participant: `ID_1`, `Start_Time`, `End_Time` and `Total_Duration_min`. Swiss local time. The span runs from opening part 1 to submitting part 2, so it covers the memory task as well |
 | — | `kanji_prize_draw.xlsx` | E-mail address and date only, in its own file and never joined to the rest, so a draw entry cannot be tied to anyone''s answers |
 
@@ -1860,14 +1860,14 @@ ones that are worked out:
 | Column | Meaning |
 |---|---|
 | `ID_1` · `ID_2` | The participant code, and the code typed again at the end of the study |
-| `Progress` · `Finished` | How far through the ten steps the code got, in percent. **Finished** means the last step was submitted |
+| `Progress` · `Finished` | How far through the eleven steps the code got, in percent. **Finished** means the last step was submitted |
 | `Reaktionszeit_ms_Antwort` | Trial appearing to answer confirmed, ms |
 | `Reaktionszeit_ms_Confidence_Judgement` | Answer confirmed to confidence confirmed, ms |
 | `Zeit_sek_…` · `Click_Count` | First click, last click and page submit in seconds from the trial appearing, and the number of clicks, as the Qualtrics timing question records them |
-| `Language` | The language the recall block ran in: `DE`, `EN`, `FR` or `IT`. It is the one the parent chose on the first page, unless they switched language during the study |
 | `CounterBalance` | `AB` learned and recalled list A first, `BA` list B first. Empty for runs from before counterbalancing, which were all `AB`. **List** still says which list the trial belongs to |
 | `Target` · `Choose_Answer` | The tested item, and the picture the participant chose. Names as in the item list: the image `Dunkelheit` is `Dunkel`, and list A’s second `Gefaehrlich`, the one shown as a target, is `Gefaehrlich_2` |
 | `Distractor` | The wrong picture shown next to the target, e.g. `Wald` for `Nebel`. Same naming as the item list |
+| `Seite_Antwort` · `Seite_Target` | The side the participant chose, and the side the target was on: `links` or `rechts` |
 
 Running it again overwrites the files with fresh data. It only reads, so run it as
 often as you like.
@@ -1909,12 +1909,12 @@ two rows, so check for repeats before counting.</div>
 | `record_id` | Internal row number |
 | `response_id` | Internal identifier for that submission |
 
-### Timing
+### Page metadata
 
 | Column | Meaning |
 |---|---|
 | `_meta_duration` | Seconds spent on the page |
-| `_meta_language` | Language the page was answered in (de-CH, en-GB, fr-CH, it-CH). The export turns this into a `UserLanguage` column on Part 1 |
+| `_meta_language` | Language the page was answered in: `de-CH`, `en-GB`, `fr-CH` or `it-CH` |
 | `_meta_start_time`, `_meta_end_time` | UTC timestamps for opening and submitting |
 | `_meta_pages` | Per-page timings, packed as one cell |
 | `pageNo` | Last page reached inside that questionnaire, counting from 0 |
@@ -1927,6 +1927,7 @@ Screen size and browser details are not in the files; the CMS **Data** page has 
 |---|---|
 | `EV` | Do you consent to taking part? — 1 = yes · 2 = no |
 | `ID_1` | The code typed from the letter. Free text |
+| `UserLanguage` | The language chosen at the start, copied by the export from `_meta_language` |
 
 ### Demographics — responding parent
 
@@ -2010,8 +2011,8 @@ SET @md_trials = '
 ## The memory task columns
 
 The recall files already give one row per trial. Underneath, on the CMS **Data** page,
-each of the four task steps stores a few summary numbers plus one packed cell holding
-every trial.
+each of the four task steps stores a few summary numbers plus one packed cell per block
+holding its trials.
 
 ### Summary columns
 
@@ -2030,8 +2031,7 @@ every trial.
 <div class="doc-warn"><span class="doc-tag">Check the trial count first</span>
 Each list is <strong>30 learning trials and 15 recall trials</strong>, plus 2 practice
 learning and 1 practice recall — 93 in all. Recall is half of learning by design. That is 31
-rows per participant in <code>kanji_recall.xlsx</code>; 5 rows means the data came from the
-earlier short test build, not a real run.</div>
+rows per participant in <code>kanji_recall.xlsx</code>.</div>
 
 ### Packed trial cells
 
