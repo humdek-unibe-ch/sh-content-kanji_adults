@@ -252,6 +252,8 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 
 SET @ks_part1 = (SELECT id FROM sections WHERE name = 'kanji-survey-part1');
 
+-- Redirect templates start with a slash: with an empty BASE_PATH both plugins hand a
+-- relative one to the browser unchanged, which resolves against the current page.
 
 -- redirect_at_end sends the participant into the timed task once part 1 is
 -- submitted. The survey `survey-js` field must be set in the CMS to the
@@ -259,7 +261,7 @@ SET @ks_part1 = (SELECT id FROM sections WHERE name = 'kanji-survey-part1');
 -- not exist until the JSON is imported, so it cannot be set here.
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
 VALUES
-    (@ks_part1, get_field_id('redirect_at_end'),   '0000000001', '0000000001', 'kanji-adults-demographics/{{ID_1}}')
+    (@ks_part1, get_field_id('redirect_at_end'),   '0000000001', '0000000001', '/kanji-adults-demographics/{{ID_1}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 -- Part 1 always opens at the consent page. The last response is loaded scoped
@@ -325,7 +327,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @kt_labjs_1 = (SELECT id FROM sections WHERE name = 'kanji-task-labjs-1');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@kt_labjs_1, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-pause-1/{{extra_param_code}}')
+VALUES (@kt_labjs_1, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-pause-1/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
@@ -446,7 +448,7 @@ INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_langu
 VALUES
     (@ks_demo, get_field_id('url_params'),        '0000000001', '0000000001', '1'),
     (@ks_demo, get_field_id('update_based_on'),   '0000000001', '0000000001', 'extra_param_code'),
-    (@ks_demo, get_field_id('redirect_at_end'),   '0000000001', '0000000001', 'kanji-adults-task-1/{{extra_param_code}}')
+    (@ks_demo, get_field_id('redirect_at_end'),   '0000000001', '0000000001', '/kanji-adults-task-1/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 -- Guard: same open/done pair as every other code-bearing page.
@@ -512,7 +514,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @kt_labjs_2 = (SELECT id FROM sections WHERE name = 'kanji-task-labjs-2');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@kt_labjs_2, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-pause-2/{{extra_param_code}}')
+VALUES (@kt_labjs_2, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-pause-2/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
@@ -550,7 +552,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @kt_labjs_3 = (SELECT id FROM sections WHERE name = 'kanji-task-labjs-3');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@kt_labjs_3, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-pause-3/{{extra_param_code}}')
+VALUES (@kt_labjs_3, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-pause-3/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
@@ -588,7 +590,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @kt_labjs_4 = (SELECT id FROM sections WHERE name = 'kanji-task-labjs-4');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@kt_labjs_4, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-pause-4/{{extra_param_code}}')
+VALUES (@kt_labjs_4, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-pause-4/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
@@ -626,7 +628,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @sec_pause_1 = (SELECT id FROM sections WHERE name = 'kanji-pause-1');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@sec_pause_1, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-task-2/{{extra_param_code}}')
+VALUES (@sec_pause_1, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-task-2/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 -- Pause page 2 (vignette)
@@ -656,7 +658,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @sec_pause_2 = (SELECT id FROM sections WHERE name = 'kanji-pause-2');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@sec_pause_2, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-task-3/{{extra_param_code}}')
+VALUES (@sec_pause_2, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-task-3/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 -- Pause page 3 (vignette)
@@ -686,7 +688,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @sec_pause_3 = (SELECT id FROM sections WHERE name = 'kanji-pause-3');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@sec_pause_3, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-task-4/{{extra_param_code}}')
+VALUES (@sec_pause_3, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-task-4/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 -- Pause page 4 (vignette), between the second recall and the closing questions
@@ -716,7 +718,7 @@ INSERT IGNORE INTO `sections` (`id_styles`, `name`, `owner`)
 SET @sec_pause_4 = (SELECT id FROM sections WHERE name = 'kanji-pause-4');
 
 INSERT INTO `sections_fields_translation` (`id_sections`, `id_fields`, `id_languages`, `id_genders`, `content`)
-VALUES (@sec_pause_4, get_field_id('redirect_at_end'), '0000000001', '0000000001', 'kanji-adults-questions/{{extra_param_code}}')
+VALUES (@sec_pause_4, get_field_id('redirect_at_end'), '0000000001', '0000000001', '/kanji-adults-questions/{{extra_param_code}}')
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
 
 -- -----------------------------------------------------------------------
