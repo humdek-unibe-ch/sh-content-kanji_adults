@@ -30,7 +30,7 @@ admin-only `documentation` page the migration installs. It exists twice, as the
 
    `@base_path` at the top of the migration must match `BASE_PATH` in
    `globals_untracked.php`; every asset URL is built from it. The task's own
-   images are embedded in the lab.js segments, and this plugin's `assets/`
+   images are embedded in the lab.js segments, and this repo's `assets/`
    folder holds the 165 originals they were made from.
 
 2. Run the migration. **Without the charset flag every umlaut is corrupted:**

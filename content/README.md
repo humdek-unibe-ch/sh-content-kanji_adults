@@ -58,4 +58,4 @@ file names where the list spells an image differently (`Dunkel`,
   forces `#fff`), SurveyJS internals, and on the pauses an overlay asking a
   phone held in landscape to turn back to portrait.
 
-How the pages run and what they record is in the plugin README one level up.
+How the pages run and what they record is in the README one level up.

@@ -191,7 +191,7 @@ VALUES (@kanji_welcome, @kw_container, 0);
 -- of content behind the two URLs: `/` for anyone arriving at the site, and
 -- `/kanji-adults` so a link already printed on a letter keeps working.
 --
--- `home` is a core page, so this is the one place the plugin reaches outside its
+-- `home` is a core page, so this is the one place the study reaches outside its
 -- own pages. Re-running the migration re-applies it.
 SET @home = (SELECT id FROM pages WHERE keyword = 'home');
 
@@ -199,7 +199,7 @@ INSERT IGNORE INTO `pages_sections` (`id_pages`, `id_sections`, `position`)
 SELECT @home, @kw_container, 0 FROM DUAL WHERE @home IS NOT NULL;
 
 -- `home` shows the same language page, so it loses the chrome as well. This is
--- a core page, so the change reaches outside the plugin: on an install that
+-- a core page, so the change reaches outside the study: on an install that
 -- serves anything else from `/`, drop this statement.
 UPDATE `pages` SET `is_headless` = 1 WHERE `keyword` = 'home';
 
