@@ -53,7 +53,7 @@ and 3 fill the retention interval between learning a list and recalling it.
 
 | Keyword | CMS name | Table |
 |---|---|---|
-| `home`, `kanji-adults` | language picker, one section behind both URLs | — |
+| `home` | language picker, the site root | — |
 | `kanji-adults-survey` | Kanji – Teil 1: Einverständnis und Code | `Kanji_Part1` |
 | `kanji-adults-demographics` | Kanji – Teil 2: Angaben | `Kanji_Demographics` |
 | `kanji-adults-task-1` | Kanji Aufgabe 1: Instruktion, Übung, Lernen Liste A | `Kanji_Task1` |

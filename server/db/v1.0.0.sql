@@ -64,21 +64,9 @@ UPDATE `languages` SET `language` = 'Italiano'  WHERE `locale` = 'it-CH';
 
 -- -----------------------------------------------------------------------
 -- Page 1: welcome / landing
--- Open access: participants arrive from a letter, before any login.
+-- Open access: participants arrive from a letter, before any login. This is the
+-- core `home` page, not a page of its own.
 -- -----------------------------------------------------------------------
-
-INSERT IGNORE INTO `pages` (
-    `id`, `keyword`, `url`, `protocol`,
-    `id_actions`, `id_navigation_section`, `parent`,
-    `is_headless`, `nav_position`, `footer_position`,
-    `id_type`, `id_pageAccessTypes`
-) VALUES (
-    NULL, 'kanji-adults', '/kanji-adults', 'GET',
-    '0000000003', NULL, NULL,
-    '0', NULL, NULL,
-    (SELECT id FROM pageType WHERE name = 'experiment'),
-    (SELECT id FROM lookups WHERE type_code = 'pageAccessTypes' AND lookup_code = 'web')
-);
 
 -- The study is the only thing on this install, so the language choice is the
 -- site root: a participant typing the bare domain lands on it, with no redirect
@@ -90,17 +78,12 @@ SET @kanji_welcome = (SELECT id FROM pages WHERE keyword = 'home');
 -- to, and the chrome invites participants to wander off mid-task. INSERT IGNORE
 -- above leaves an existing install untouched, so set the flag explicitly.
 UPDATE `pages` SET `is_headless` = 1
- WHERE `keyword` IN ('kanji-adults', 'kanji-adults-survey', 'kanji-adults-pause-1',
+ WHERE `keyword` IN ('kanji-adults-survey', 'kanji-adults-pause-1',
                      'kanji-adults-pause-2', 'kanji-adults-pause-3',
                      'kanji-adults-pause-4', 'kanji-adults-questions', 'kanji-adults-demographics',
                      'kanji-adults-task-1', 'kanji-adults-task-2',
                      'kanji-adults-task-3', 'kanji-adults-task-4',
                      'kanji-adults-prize-draw');
-
--- Show the study entry point in the site header. Only the welcome page is
--- listed: the survey/task/questions pages are reached by redirect, and a nav
--- link would let a participant jump straight into the task.
-UPDATE `pages` SET `nav_position` = 25 WHERE `keyword` = 'kanji-adults';
 
 INSERT IGNORE INTO `pages_fields_translation` (`id_pages`, `id_fields`, `id_languages`, `content`)
 VALUES
@@ -186,10 +169,7 @@ VALUES (@kanji_welcome, @kw_container, 0);
 --
 -- On a single-study installation the two are the same thing, and having both in
 -- the header — an empty `Start` next to `Kanji Learning Task` — gives a
--- participant arriving from the letter a choice that means nothing. The same
--- container is attached to both pages rather than copied, so there is one piece
--- of content behind the two URLs: `/` for anyone arriving at the site, and
--- `/kanji-adults` so a link already printed on a letter keeps working.
+-- participant arriving from the letter a choice that means nothing.
 --
 -- `home` is a core page, so this is the one place the study reaches outside its
 -- own pages. Re-running the migration re-applies it.
@@ -204,8 +184,7 @@ SELECT @home, @kw_container, 0 FROM DUAL WHERE @home IS NOT NULL;
 UPDATE `pages` SET `is_headless` = 1 WHERE `keyword` = 'home';
 
 -- Name the start page after the study, in every language. Only `de-CH` had a
--- title ('Start'), and the study page itself was missing `fr`/`it`, so a French
--- or Italian participant read an English label.
+-- title ('Start'), so a French or Italian participant read an English label.
 INSERT INTO `pages_fields_translation` (`id_pages`, `id_fields`, `id_languages`, `content`)
 SELECT p.id, f.id, l.id, t.label
   FROM (SELECT 'de-CH' AS locale, 'Kanji Lernaufgabe' AS label
@@ -214,12 +193,8 @@ SELECT p.id, f.id, l.id, t.label
         UNION ALL SELECT 'it-CH', 'Compito di apprendimento Kanji') t
   JOIN languages l ON l.locale = t.locale
   JOIN fields f ON f.name IN ('label', 'title')
-  JOIN pages p ON p.keyword IN ('home', 'kanji-adults')
+  JOIN pages p ON p.keyword = 'home'
 ON DUPLICATE KEY UPDATE `content` = VALUES(`content`);
-
--- One header entry, not two: the study page is reachable by URL but no longer
--- listed, because the start page now leads to exactly the same place.
-UPDATE `pages` SET `nav_position` = NULL WHERE `keyword` = 'kanji-adults';
 
 -- -----------------------------------------------------------------------
 -- Page 2: part 1 questionnaire (consent, code, demographics)
@@ -988,7 +963,7 @@ INSERT IGNORE INTO `acl_groups` (`id_groups`, `id_pages`, `acl_select`, `acl_ins
            IF(g.name = 'admin', 1, 0), IF(g.name = 'admin', 1, 0), IF(g.name = 'admin', 1, 0)
     FROM `groups` g
     CROSS JOIN `pages` p
-    WHERE p.keyword IN ('home', 'kanji-adults', 'kanji-adults-survey',
+    WHERE p.keyword IN ('home', 'kanji-adults-survey',
                         'kanji-adults-task-1', 'kanji-adults-task-2',
                         'kanji-adults-task-3', 'kanji-adults-task-4',
                         'kanji-adults-pause-1', 'kanji-adults-pause-2',
@@ -1008,7 +983,7 @@ INSERT IGNORE INTO `acl_groups` (`id_groups`, `id_pages`, `acl_select`, `acl_ins
 INSERT IGNORE INTO `acl_users` (`id_users`, `id_pages`, `acl_select`, `acl_insert`, `acl_update`, `acl_delete`)
     SELECT (SELECT id FROM users WHERE email = 'guest'), p.id, 1, 0, 0, 0
     FROM `pages` p
-    WHERE p.keyword IN ('home', 'kanji-adults', 'kanji-adults-survey',
+    WHERE p.keyword IN ('home', 'kanji-adults-survey',
                         'kanji-adults-task-1', 'kanji-adults-task-2',
                         'kanji-adults-task-3', 'kanji-adults-task-4',
                         'kanji-adults-pause-1', 'kanji-adults-pause-2',
