@@ -500,7 +500,7 @@
           "title": {
             "en": "Are there other children (aged 0-17) living in your household, e.g. siblings, adopted children, half-siblings, step-siblings, foster children?",
             "fr": "D’autres enfants (0–17 ans) vivent-ils dans votre ménage, p. ex. frères et sœurs, enfants adoptifs, demi-frères et sœurs, beaux-frères et sœurs, enfants placés?",
-            "it": "Nel suo nucleo familiare vivono anche altri bambini (0-17 anni), ad es. fratelli, fratelli adottivi, fratellastri, fratelli acquisiti o bambini in affido?",
+            "it": "Nella sua famiglia vivono altri bambini (0-17 anni), ad esempio fratelli, sorelle, fratellastri, sorellastre, fratelli adottivi, fratellastri o figli in affido?",
             "default": "Leben in Ihrem Haushalt noch andere Kinder (0-17 Jahre alt), z.B. Geschwister, Adoptiv-, Halb-, Stiefgeschwister, Pflegekinder?"
           },
           "isRequired": true,
@@ -683,7 +683,7 @@
               "name": "geschlecht",
               "startWithNewLine": false,
               "title": {
-                "en": "Sex",
+                "en": "Gender",
                 "fr": "Sexe",
                 "it": "Sesso",
                 "default": "Geschlecht"
@@ -1271,9 +1271,9 @@
           "type": "radiogroup",
           "name": "Demo_20",
           "title": {
-            "en": "What is the relationship with the child?",
-            "fr": "Quelle est la relation avec l'enfant?",
-            "it": "Qual è il suo rapporto con il bambino?",
+            "en": "What is the relationship to the child? (From the second parent/legal guardian)",
+            "fr": "Quelle est la relation avec l'enfant ? (Du deuxième parent/tuteur légal)",
+            "it": "Qual è il rapporto con il bambino? (Dal secondo genitore/tutore legale)",
             "default": "Was ist das Verhältnis zum Kind? (Vom zweiten Elternteil/Erziehungsberechtigen)"
           },
           "isRequired": true,

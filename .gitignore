@@ -5,3 +5,6 @@ server/service/globals_untracked.php
 export/*.csv
 export/*.xlsx
 export/kanji_data/
+
+# Database dumps pulled from a server for comparison
+export/*.sql
