@@ -355,6 +355,14 @@ VALUES (@kanji_task_1, @kt_style_1, 0);
 -- Condition Builder's format. Without it the CMS dialog opens empty.
 -- -----------------------------------------------------------------------
 
+-- Core skips a data_config whose table does not exist yet, which leaves
+-- @page_state unset and shows "already completed" to a first-time code. Core
+-- creates this row on the first save, so make it up front.
+INSERT IGNORE INTO `dataTables` (`name`) VALUES
+    ('Kanji_Demographics'), ('Kanji_Task1'), ('Kanji_Pause1'), ('Kanji_Task2'),
+    ('Kanji_Pause2'), ('Kanji_Task3'), ('Kanji_Pause3'), ('Kanji_Task4'),
+    ('Kanji_Pause4'), ('Kanji_Part2');
+
 SET @cond_meta_open = '{"condition":"AND","rules":[{"id":"field","field":"field","type":"string","input":"text","operator":"field_equal","value":["@page_state","not-finished"]}],"valid":true}';
 SET @cond_meta_done = '{"condition":"AND","rules":[{"id":"field","field":"field","type":"string","input":"text","operator":"field_not_equal","value":["@page_state","not-finished"]}],"valid":true}';
 
