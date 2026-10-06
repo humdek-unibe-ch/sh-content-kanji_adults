@@ -13,14 +13,13 @@ admin-only `documentation` page the migration installs. It exists twice, as the
 - [SelfHelp](https://github.com/humdek-unibe-ch/sh-selfhelp) **v7.10.0+** — the
   landing page is a `languagePicker` section
 - [sh-shp-survey_js](https://github.com/humdek-unibe-ch/sh-shp-survey_js)
-  **newer than v1.7.0** — needs the unreleased guest-row fixes, without which
-  participants on the shared guest account overwrite each other, and
-  `_meta_language`
+  **v1.7.0+** — needs its guest-row fixes, without which participants on the
+  shared guest account overwrite each other, and `_meta_language`
 - [sh-shp-lab_js](https://github.com/humdek-unibe-ch/sh-shp-lab_js) **v1.3.0+**
 
 ## Install
 
-1. Copy `content/kanji_labjs.css` and these into the served `/assets`:
+1. Copy `content/kanji_labjs.css` and these from `assets/` into the served `/assets`:
 
    ```
    ID_Brief.png  Logo_Universitaet_Bern.png  aufmerksamkeit_2c_ausrufezeichen.png
@@ -30,8 +29,8 @@ admin-only `documentation` page the migration installs. It exists twice, as the
 
    `@base_path` at the top of the migration must match `BASE_PATH` in
    `globals_untracked.php`; every asset URL is built from it. The task's own
-   images are embedded in the lab.js segments, and this repo's `assets/`
-   folder holds the 165 originals they were made from.
+   images are embedded in the lab.js segments; the other 164 files in `assets/`
+   are the originals they were made from.
 
 2. Run the migration. **Without the charset flag every umlaut is corrupted:**
 
